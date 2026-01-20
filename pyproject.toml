@@ -1,0 +1,41 @@
+[project]
+name = "p12"
+version = "0.1.0"
+description = "projet 12"
+authors = [
+    {name = "RomaneFatima-Zahra",email = "barhoufz@gmail.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pandas (>=2.3.3,<3.0.0)",
+    "matplotlib (>=3.10.8,<4.0.0)",
+    "seaborn (>=0.13.2,<0.14.0)",
+    "scikit-learn (==1.8.0)",
+    "xgboost (>=3.1.2,<4.0.0)",
+    "fastapi (>=0.128.0,<0.129.0)",
+    "uvicorn (>=0.40.0,<0.41.0)",
+    "lightgbm (>=4.6.0,<5.0.0)",
+    "streamlit (>=1.52.2,<2.0.0)",
+    "mlflow (>=3.8.1,<4.0.0)",
+    "pytest (>=9.0.2,<10.0.0)",
+    "prince (>=0.16.3,<0.17.0)",
+    "statsmodels (>=0.14.6,<0.15.0)",
+    "numpy (==1.26.4)",
+    "plotly (>=6.5.2,<7.0.0)",
+    "httpx (>=0.28.1,<0.29.0)",
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^7.1.0"
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
+
