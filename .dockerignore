@@ -25,3 +25,6 @@ htmlcov
 .conda
 .ipynb_checkpoints
 .env
+mlruns/
+scripts/mlruns/
+scripts/mlflow.db
