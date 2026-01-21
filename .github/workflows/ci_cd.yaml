@@ -62,6 +62,16 @@ jobs:
           docker build -t fatizab/cropyield_prediction:latest .
           docker push fatizab/cropyield_prediction:latest
 
+      - name: Build and push Docker image
+        if: github.event_name == 'push'
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: fatizab/cropyield_prediction:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
       # 9. Sauvegarder l'image Docker dans les artefacts
       - name: Save and upload Docker image
         if: github.event_name == 'push'
