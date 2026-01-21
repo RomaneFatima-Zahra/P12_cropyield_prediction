@@ -1,0 +1,75 @@
+name: CICD
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  test-build-push:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      # 1. Récupération du repo
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Installer Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # 3. Installer Poetry
+      - name: Install Poetry
+        uses: abatilo/actions-poetry@v3
+
+      # 4. Cache pour Poetry
+      - name: Cache Poetry dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/pypoetry
+            .venv
+          key: ${{ runner.os }}-poetry-${{ hashFiles('poetry.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-poetry-
+
+      # 5. Installer les dépendances
+      - name: Install dependencies
+        run: |
+          poetry install --no-root --no-interaction --no-ansi
+
+      # 6. Lancer les tests
+      - name: Run tests
+        run: |
+          poetry run pytest tests/
+
+      # 7. Connexion à Docker Hub
+      - name: Login to Docker Hub
+        if: github.event_name == 'push'
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # 8. Construire et pousser l'image Docker
+      - name: Build and push Docker image
+        if: github.event_name == 'push'
+        run: |
+          docker build -t fatizab/cropyield_prediction:latest .
+          docker push fatizab/cropyield_prediction:latest
+
+      # 9. Sauvegarder l'image Docker dans les artefacts
+      - name: Save and upload Docker image
+        if: github.event_name == 'push'
+        run: docker save fatizab/rcropyield_prediction:latest -o image.tar
+
+      - name: Upload artifact
+        if: github.event_name == 'push'
+        uses: actions/upload-artifact@v4
+        with:
+          name: docker-image
+          path: image.tar
