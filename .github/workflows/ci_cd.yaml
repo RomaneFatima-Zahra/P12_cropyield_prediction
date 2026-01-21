@@ -65,7 +65,7 @@ jobs:
       # 9. Sauvegarder l'image Docker dans les artefacts
       - name: Save and upload Docker image
         if: github.event_name == 'push'
-        run: docker save fatizab/rcropyield_prediction:latest -o image.tar
+        run: docker save fatizab/cropyield_prediction:latest -o image.tar
 
       - name: Upload artifact
         if: github.event_name == 'push'
