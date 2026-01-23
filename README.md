@@ -166,7 +166,7 @@ p12/
 
 1. **Cloner le repository**
 ```bash
-git clone <votre-repo>
+git clone https://github.com/RomaneFatima-Zahra/P12_cropyield_prediction.git
 cd p12
 ```
 
@@ -526,9 +526,6 @@ curl -X POST http://localhost:8000/predict \
 ### Sources 
 
 - Données : FAO (Food and Agriculture Organization) : https://www.fao.org
-- Modèle ML : scikit-learn, XGBoost
-- Framework API : FastAPI
-- Interface : Streamlit
 
 ---
 
